@@ -1,22 +1,19 @@
 pool:
-  vmImage: 'windows-2019'
+  vmImage: ubuntu-latest # Use 'windows-latest' if you have Windows native +Node modules
 steps:
-- script: |
-    cd dotnet\aspnetcore\functionApp\Application\
-    dotnet restore
-    dotnet build --configuration Release
-- task: DotNetCoreCLI@2
-  inputs:
-    command: publish
-    arguments: '--configuration Release --output publish_output'
-    projects: '*.csproj'
-    publishWebProjects: false
-    modifyOutputPath: false
-    zipAfterPublish: false
+- bash: |
+    cd node/plain/functionApp/
+    if [ -f extensions.csproj ]
+    then
+        dotnet build extensions.csproj --output ./bin
+    fi
+    npm install 
+    npm run build --if-present
+    npm prune --production
 - task: ArchiveFiles@2
   displayName: "Archive files"
   inputs:
-    rootFolderOrFile: "$(System.DefaultWorkingDirectory)/publish_output"
+    rootFolderOrFile: "$(System.DefaultWorkingDirectory)"
     includeRootFolder: false
     archiveFile: "$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip"
 - task: PublishBuildArtifacts@1
