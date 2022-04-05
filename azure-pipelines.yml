@@ -1,5 +1,5 @@
 pool:
-  vmImage: 'windows-2016'
+  vmImage: 'windows-2019'
 steps:
 - script: |
     cd dotnet\aspnetcore\functionApp\Application\
