@@ -1,8 +1,8 @@
 pool:
   vmImage: ubuntu-latest # Use 'windows-latest' if you have Windows native +Node modules
 steps:
+- script: cd node/plain/functionApp/
 - bash: |
-    cd node/plain/functionApp/
     if [ -f extensions.csproj ]
     then
         dotnet build extensions.csproj --output ./bin
