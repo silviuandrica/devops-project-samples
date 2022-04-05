@@ -2,7 +2,7 @@ pool:
   vmImage: 'windows-latest'
 steps:
 - script: |
-    cd dotnet\aspnetcore\functionApp\
+    cd dotnet\aspnetcore\functionApp\Application\
     dotnet restore
     dotnet build --configuration Release
 - task: DotNetCoreCLI@2
